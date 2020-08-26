@@ -167,11 +167,6 @@ System Language : en_US
 Domain          : HTB
 Logged On Users : 1
 Meterpreter     : x86/windows
-meterpreter > 
-meterpreter > search -f user.txt
-Found 1 result...
-    c:\Documents and Settings\john\Desktop\user.txt (32 bytes)
-
 ```
 
-
+From here is trivial to get user and root flags. Note that at the moment of writing this the hashes obtained weren't being accepted by the HTB dashboard.
